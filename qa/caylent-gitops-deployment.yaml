@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caylent-gitops
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: caylent-gitops
+  template:
+    metadata:
+      labels:
+        app: caylent-gitops
+    spec:
+      containers:
+        - image: gcr.io/caylent-gitops/caylent-gitops-app:0.0.1
+          name: caylent-gitops
+          env:
+            - name: TARGET
+              value: "QA"
+          ports:
+            - containerPort: 8080
